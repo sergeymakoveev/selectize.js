@@ -2057,12 +2057,14 @@
 
 			self.lock();
 
-			var setup = (typeof self.settings.create === 'function') ? this.settings.create : function(input) {
-				var data = {};
-				data[self.settings.labelField] = input;
-				data[self.settings.valueField] = input;
-				return data;
-			};
+			var setup = (typeof self.settings.create === 'function')
+							? this.settings.create
+							: function(input) {
+									var data = {};
+									data[self.settings.labelField] = input;
+									data[self.settings.valueField] = input;
+									return data;
+								};
 
 			var create = once(function(data) {
 				self.unlock();
@@ -3190,4 +3192,4 @@
 
 
 	return Selectize;
-}));
+}))
