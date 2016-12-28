@@ -1942,7 +1942,8 @@
 				var i, active, value_next, wasFull;
 				value = hash_key(value);
 
-				if (self.items.indexOf(value) !== -1) {
+				if(!self.settings.allowDublicatedItems &&
+					self.items.indexOf(value) !== -1) {
 					if (inputMode === 'single') self.close();
 					return;
 				}
@@ -2204,7 +2205,7 @@
 			if (!this.settings.placeholder) return;
 			var $input = this.$control_input;
 
-			if (this.items.length) {
+			if (this.items.length && !this.settings.placeholderForce) {
 				$input.removeAttr('placeholder');
 			} else {
 				$input.attr('placeholder', this.settings.placeholder);
@@ -2559,7 +2560,8 @@
 
 			if (templateName === 'option' || templateName === 'item') {
 				value = hash_key(data[self.settings.valueField]);
-				cache = !!value;
+				if(!self.settings.allowDublicatedItems)
+					cache = !!value;
 			}
 
 			// pull markup from cache if it exists
@@ -2653,6 +2655,7 @@
 		selectOnTab: false,
 		preload: false,
 		allowEmptyOption: false,
+		allowDublicatedItems: false,
 		closeAfterSelect: false,
 
 		scrollDuration: 60,
@@ -2663,6 +2666,7 @@
 		optgroupField: 'optgroup',
 		valueField: 'value',
 		labelField: 'text',
+		placeholderForce: false,
 		optgroupLabelField: 'label',
 		optgroupValueField: 'value',
 		lockOptgroupOrder: false,
